@@ -1,0 +1,19 @@
+{
+  "name": "eplayer-vite-server",
+  "version": "1.0.0",
+  "description": "Server for face emotion recognition ",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "server": "nodemon backend/server.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.3",
+    "express-async-handler": "^1.2.0",
+    "python-shell": "^3.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
