@@ -10,6 +10,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // api routes
 app.use("/api/fer", require("./routes/ferRoutes"));
+app.use("/api/wifi", require("./routes/wifiRoutes"));
 
 // custom middleware
 app.use(errorHandler);
