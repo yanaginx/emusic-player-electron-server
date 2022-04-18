@@ -23,3 +23,8 @@ release
 *.njsproj
 *.sln
 *.sw?
+
+Gesture-Hand_Tracking
+__pycache__
+
+test*

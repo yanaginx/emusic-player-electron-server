@@ -11,6 +11,7 @@ app.use(express.urlencoded({ extended: false }));
 // api routes
 app.use("/api/fer", require("./routes/ferRoutes"));
 app.use("/api/wifi", require("./routes/wifiRoutes"));
+app.use("/api/scan", require("./routes/scanDirRoutes"));
 
 // custom middleware
 app.use(errorHandler);
