@@ -12,6 +12,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api/fer", require("./routes/ferRoutes"));
 app.use("/api/wifi", require("./routes/wifiRoutes"));
 app.use("/api/scan", require("./routes/scanDirRoutes"));
+app.use("/api/hand_gesture", require("./routes/handGestureRoutes"));
 
 // custom middleware
 app.use(errorHandler);
