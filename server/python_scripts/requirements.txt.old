@@ -4,8 +4,7 @@ mediapipe==0.8.9.1
 mutagen==1.41.1
 numpy==1.20.3
 opencv_python==4.5.5.62
-pexpect==4.8.0
-protobuf==3.20.1
+protobuf==3.20.0
 PyAutoGUI==0.9.53
 pycaw==20220416
 pywin32==303

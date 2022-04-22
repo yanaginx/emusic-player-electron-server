@@ -13,6 +13,7 @@ app.use("/api/fer", require("./routes/ferRoutes"));
 app.use("/api/wifi", require("./routes/wifiRoutes"));
 app.use("/api/scan", require("./routes/scanDirRoutes"));
 app.use("/api/hand_gesture", require("./routes/handGestureRoutes"));
+app.use("/api/bluetooth", require("./routes/bluetoothRoutes"));
 
 // custom middleware
 app.use(errorHandler);

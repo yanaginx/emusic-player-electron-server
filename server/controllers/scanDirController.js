@@ -1,8 +1,8 @@
 const asyncHandler = require("express-async-handler");
 const { spawn } = require("child_process");
 
-// @desc    Get emotion from camera
-// @route   GET /api/fer
+// @desc    Scanning usb devices and fetch files
+// @route   GET /api/scan
 // @access  Public (for now, will be private later)
 const scanDirAndCopy = asyncHandler(async (req, res) => {
   let output;
