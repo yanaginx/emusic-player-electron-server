@@ -6,7 +6,7 @@ let handGesture = null;
 // @route   GET /api/hand_gesture/enable
 // @access  Public
 const enableHandGesture = asyncHandler(async (req, res) => {
-  handGesture = spawn("python", ["./server/python_scripts/hand_gesture.py"]);
+  handGesture = spawn("python3", ["./server/python_scripts/hand_gesture.py"]);
   handGesture.on("spawn", () => {
     console.log("Hand Gesture Mode Enabled");
     res.status(200).json({ message: "Hand gesture open successfully" });

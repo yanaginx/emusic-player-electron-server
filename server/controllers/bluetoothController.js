@@ -7,7 +7,7 @@ const { spawn } = require("child_process");
 const testArgv = asyncHandler(async (req, res) => {
   const { mac } = req.body;
   let output;
-  const bluetoothOutput = spawn("python", [
+  const bluetoothOutput = spawn("python3", [
     "./server/python_scripts/test_argv.py",
     mac,
   ]);
@@ -33,7 +33,7 @@ const testArgv = asyncHandler(async (req, res) => {
 // @access  Public
 const scanDevices = asyncHandler(async (req, res) => {
   let output;
-  const bluetoothOutput = spawn("python", [
+  const bluetoothOutput = spawn("python3", [
     "./server/python_scripts/bluetooth_scan.py",
   ]);
   bluetoothOutput.stderr.on("data", (data) => {
@@ -59,7 +59,7 @@ const scanDevices = asyncHandler(async (req, res) => {
 const connectDevice = asyncHandler(async (req, res) => {
   let output;
   const { mac } = req.body;
-  const bluetoothOutput = spawn("python", [
+  const bluetoothOutput = spawn("python3", [
     "./server/python_scripts/bluetooth_connect.py",
     mac,
   ]);
@@ -90,7 +90,7 @@ const connectDevice = asyncHandler(async (req, res) => {
 const disconnectDevice = asyncHandler(async (req, res) => {
   let output;
   const { mac } = req.body;
-  const bluetoothOutput = spawn("python", [
+  const bluetoothOutput = spawn("python3", [
     "./server/python_scripts/bluetooth_disconnect.py",
     mac,
   ]);

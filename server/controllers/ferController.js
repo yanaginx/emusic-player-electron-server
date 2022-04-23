@@ -28,7 +28,7 @@ const { spawn } = require("child_process");
 // @access  Public (for now, will be private later)
 const getEmotion = asyncHandler(async (req, res) => {
   let output;
-  const ferOutput = spawn("python", ["./server/python_scripts/fer.py"]);
+  const ferOutput = spawn("python3", ["./server/python_scripts/fer.py"]);
   // For debugging
   // ferOutput.stderr.on("data", (data) => {
   //   return res.status(500).json({
