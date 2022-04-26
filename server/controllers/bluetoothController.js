@@ -53,6 +53,35 @@ const scanDevices = asyncHandler(async (req, res) => {
   });
 });
 
+// @desc    Get bluetooth paired devices
+// @route   GET /api/bluetooth/paired
+// @access  Public
+const getPairedDevice = asyncHandler(async (req, res) => {
+  let output;
+  const bluetoothOutput = spawn("python3", [
+    "./server/python_scripts/bluetooth_paired.py",
+  ]);
+  bluetoothOutput.stderr.on("data", (data) => {
+    console.log(data.toString());
+  });
+  bluetoothOutput.stdout.on("data", (data) => {
+    output = JSON.parse(data);
+  });
+  bluetoothOutput.on("close", (code) => {
+    if (code === 0) {
+      if (!output.hasOwnProperty("status")) {
+        res.status(200).json(output);
+      } else {
+        res.status(400).json(output.message);
+      }
+    } else {
+      res.status(400).json({
+        message: "Somethings went wrong!",
+      });
+    }
+  });
+});
+
 // @desc    Connect bluetooth devices
 // @route   POST /api/bluetooth/connect
 // @access  Public
@@ -72,9 +101,9 @@ const connectDevice = asyncHandler(async (req, res) => {
   bluetoothOutput.on("close", (code) => {
     if (code === 0) {
       if (output.status === "successful") {
-        res.status(200).json(output);
+        res.status(200).json(output.message);
       } else {
-        res.status(400).json(output);
+        res.status(400).json(output.message);
       }
     } else {
       res.status(400).json({
@@ -103,9 +132,9 @@ const disconnectDevice = asyncHandler(async (req, res) => {
   bluetoothOutput.on("close", (code) => {
     if (code === 0) {
       if (output.status === "successful") {
-        res.status(200).json(output);
+        res.status(200).json(output.message);
       } else {
-        res.status(400).json(output);
+        res.status(400).json(output.message);
       }
     } else {
       res.status(400).json({
@@ -115,4 +144,10 @@ const disconnectDevice = asyncHandler(async (req, res) => {
   });
 });
 
-module.exports = { testArgv, scanDevices, connectDevice, disconnectDevice };
+module.exports = {
+  testArgv,
+  scanDevices,
+  getPairedDevice,
+  connectDevice,
+  disconnectDevice,
+};
