@@ -15,6 +15,7 @@ app.use("/api/scan", require("./routes/scanDirRoutes"));
 app.use("/api/hand_gesture", require("./routes/handGestureRoutes"));
 app.use("/api/bluetooth", require("./routes/bluetoothRoutes"));
 app.use("/api/volume", require("./routes/volumeRoutes"));
+app.use("/api/online", require("./routes/onlineRoutes"));
 
 // custom middleware
 app.use(errorHandler);
