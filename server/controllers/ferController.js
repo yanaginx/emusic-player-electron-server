@@ -23,12 +23,36 @@
 const asyncHandler = require("express-async-handler");
 const { spawn } = require("child_process");
 
+const ferOutput = spawn("python", ["-u", "./server/python_scripts/fer.py"]);
+let output = null;
+
+ferOutput.on("spawn", () => {
+  console.log("SCRIPT SPAWN!, Waiting for output");
+});
+
+const waitForOutput = () => {
+  return new Promise((resolve, reject) => {
+    ferOutput.stdout.on("data", (data) => {
+      console.log(
+        "🚀 ~ file: ferController.js ~ line 49 ~ stdout",
+        data.toString()
+      );
+      resolve(JSON.parse(data.toString()));
+    });
+    ferOutput.stdout.on("error", (err) => {
+      console.log(
+        "🚀 ~ file: ferController.js ~ line 49 ~ stderr",
+        err.toString()
+      );
+      reject(data.toString());
+    });
+  });
+};
+
 // @desc    Get emotion from camera
 // @route   GET /api/fer
 // @access  Public (for now, will be private later)
 const getEmotion = asyncHandler(async (req, res) => {
-  let output;
-  const ferOutput = spawn("python3", ["./server/python_scripts/fer.py"]);
   // For debugging
   // ferOutput.stderr.on("data", (data) => {
   //   return res.status(500).json({
@@ -36,19 +60,35 @@ const getEmotion = asyncHandler(async (req, res) => {
   //   });
   // });
   ////////////////////////////////////////////////
-  ferOutput.stdout.on("data", (data) => {
-    output = JSON.parse(data);
-  });
-  ferOutput.on("close", (code) => {
-    if (code === 0) {
-      res.status(200).json(output);
-    } else {
-      res.status(400).json({
-        code: process.env.NODE_ENV === "production" ? null : code,
-        message: "Somethings went wrong!",
-      });
-    }
-  });
+  output = null;
+  ferOutput.stdin.write(`Get emotion \n`);
+
+  // if (output) {
+  //   res.status(200).json(output);
+  // } else {
+  //   setTimeout(() => {
+  //     res.status(200).json(output);
+  //   }, 10000);
+  // }
+  output = await waitForOutput();
+  if (output) {
+    res.status(200).json(output);
+  } else {
+    res.status(500).json({
+      error: "Something went wrong!",
+    });
+  }
+
+  // ferOutput.on("close", (code) => {
+  //   if (code === 0) {
+  //     res.status(200).json(output);
+  //   } else {
+  //     res.status(400).json({
+  //       code: process.env.NODE_ENV === "production" ? null : code,
+  //       message: "Somethings went wrong!",
+  //     });
+  //   }
+  // });
 });
 
 module.exports = { getEmotion };
